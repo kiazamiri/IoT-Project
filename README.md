@@ -4,6 +4,6 @@ One of technologies that has been the focus of many people around the world in r
 
 In this repository, I try to familiarize and deepen your knowledge about this technology and its applications. Then I will explain a new branch of this tech called **Narrowband IoT**, which has more benefits compared to its predecessors. Lastly, I will show you how to build a GPRS gateway to a data server.
 ## Internet of Things
-Iot
+Iot points to the connection between objects and their environment with the internet and our ability to control and manage them with applications on our smartphone and tablets. In simple terms, IoT is the network between sensors and machines, which can communicate with each other and their users. Experts have predicted that in next year (2020) their will be nearly 30 billion objects that are connected to the Internet
 
-![GitHub Logo](https://live.staticflickr.com/5740/25356051069_277e8829c7_b.jpg)
+![Iot Applications](https://raw.githubusercontent.com/kiazamiri/IoT-Project/master/images/pic%201.jpg)
