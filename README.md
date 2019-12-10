@@ -14,9 +14,9 @@ IoT applications vary from infrastructures, energy, smart home, transportation a
 
 ![Smart City](https://raw.githubusercontent.com/kiazamiri/IoT-Project/master/images/iota-smart_city_components_desktop.jpg)
 ## Project
-My project is to design and implement a GPRS/WiFi gateway for IoT devices. The goal is to first measure different data that are necessary for smart city servers such as humidity, temperature, air pollution etc. and send them using an Arduino Uno board and a SIM800L module to a virtual server. This system can be deployed across the city for gathering data and processing them. 
+My project is to design and implement a GPRS/WiFi gateway for IoT devices. The goal is to first measure different data that are necessary for smart city servers such as humidity, temperature, air pollution etc. and send them using an Arduino Uno board and a SIM800L module (2nd generation) to a virtual server. This system can be deployed across the city for gathering data and processing them. 
 
-**Design and Coding**: For this project, we need wires, SIM800L module, Arduino Uno board, a sim card, regulator and a power supply. Since we are using a SIM800L module, we need a sim card for transmitting data and the supply for this module is between 3.8 and 4.2 volts. For saving the data, I have made a virtual server on the ***Thingspeak*** website. The code for the Arduino board is like below and was written in Arduino IDE software.
+**Design and Coding**: For this project, we need wires, SIM800L module, Arduino Uno board, a sim card, regulator and a power supply. Since we are using a SIM800L module, we need a sim card for transmitting data and the supply for this module is between 3.8 and 4.2 volts. For saving the data, I have made a virtual server on the [***Thingspeak***](https://thingspeak.com/) website. The code for the Arduino board is like below and was written in Arduino IDE software.
 
 The apikey that was used in the code was provided by the Thingspeak website. The apn for our specific sim card was **mcinet**. The server on Thingspeak uses GET to update.
 
@@ -31,4 +31,16 @@ In this code by calling the SoftwareSerial library, I tend to link the Arduino U
 With the GET command that includes the apikey and field number and the measured data, the data is send to the Thingspeak server which a bit of delay. In the case of an error in CIPSEND, the AT + CIPCLOSE command will be executed and starts for the beginning. 
 In the end, the server need about 15 seconds to update and AT + RST resets the process. For the layout of the circuit the SIM800L module is supplied with 4.5 volt and its TX pin is connected to the #10 pin of the Arduino Uno board and its RX pin to the #11 pin of the Arduino board like below.
 
-![my board]()
+![my board](https://raw.githubusercontent.com/kiazamiri/IoT-Project/master/images/pic%206.jpg)
+
+If the module is not exactly supplied with 4.5 volts, we get the OVER-VOLTAGE WARNING error and the code restarts.
+
+In the Serial Monitor page, you be able to see the response of the code like the picture below. The data that is being sent is just a number, in this case the number starts from 106 and each time adds one to it.
+
+![serial monitor](https://raw.githubusercontent.com/kiazamiri/IoT-Project/master/images/pic%204.png)
+
+With this, you see that the GPRS gateway is successfully transmitting data to the Thingspeak server and their data is being represented in the form below. 
+
+![Thingspeak server](https://raw.githubusercontent.com/kiazamiri/IoT-Project/master/images/pic%205.jpg)
+
+In conclusion, we can use the devices around the city to transmit data and could use more advance modules such as SIM7500E, which is 4th generation.
