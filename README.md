@@ -18,6 +18,88 @@ My project is to design and implement a GPRS/WiFi gateway for IoT devices. The g
 
 **Design and Coding**: For this project, we need wires, SIM800L module, Arduino Uno board, a sim card, regulator and a power supply. Since we are using a SIM800L module, we need a sim card for transmitting data and the supply for this module is between 3.8 and 4.2 volts. For saving the data, I have made a virtual server on the [***Thingspeak***](https://thingspeak.com/) website. The code for the Arduino board is like below and was written in Arduino IDE software.
 
+    #include <SoftwareSerial.h>
+
+    float my_value = 105;
+    String apiKey = "N6M1F6OO21F89JYC";
+    SoftwareSerial ser(10, 11); // RX, TX
+
+    void printSerialData()
+    {
+     while(ser.available()!=0)
+     Serial.write(ser.read());
+    }
+
+    void setup() {
+       Serial.begin(9600); 
+       ser.begin(9600);
+    }
+    void loop() {
+      my_value++;
+      float temp = my_value;
+      char buf[16];
+      String strTemp = dtostrf(temp, 4, 1, buf);
+      Serial.println(strTemp);
+
+      ser.println("AT+CIPSHUT");
+      delay(1000);
+      printSerialData();
+
+      ser.println("AT+CIPMUX=0");
+      delay(4000);
+      printSerialData();
+
+      ser.println("AT+CGATT=1");
+      delay(1000);
+      printSerialData();
+
+      ser.println("AT+CSTT=\"mcinet\"");//setting the APN 
+      delay(5000);
+      printSerialData();
+
+      ser.println("AT+CIICR");
+      delay(6000);
+      printSerialData();
+
+      ser.println("AT+CIFSR"); //init the HTTP request
+      delay(2000); 
+      printSerialData();
+
+      ser.println("AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",\"80\"");
+      delay(5000);
+      printSerialData();
+      delay(5000);
+      if(ser.find("Error")){
+        Serial.println("AT+CIPSTART error");
+        return;
+      }
+      String getStr = "GET /update?api_key=";
+      getStr += apiKey;
+      getStr +="&field2=";
+      getStr += String(strTemp);
+      getStr += "\r\n";
+
+      String cmd = "AT+CIPSEND=";
+      cmd += String(getStr.length());
+      ser.println(cmd);
+      Serial.println(cmd);
+      delay(5000);
+
+      if(ser.find(">")){
+        ser.print(getStr);
+        Serial.println(getStr);
+        ser.println("AT+RST");
+        delay(30000);
+      }
+      else{
+        ser.println("AT+CIPCLOSE");
+        // alert user
+        Serial.println("AT+CIPCLOSE");
+        delay(3000);
+      }
+    {
+
+
 The apikey that was used in the code was provided by the Thingspeak website. The apn for our specific sim card was **mcinet**. The server on Thingspeak uses GET to update.
 
 In this code by calling the SoftwareSerial library, I tend to link the Arduino Uno board and the module. By setting the Baud rate on 9600 which is the SIM800L frequency, I send the data. The function printSerialData will receive and displays the command on the Serial monitor. 
