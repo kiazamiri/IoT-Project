@@ -10,7 +10,7 @@ IoT applications vary from infrastructures, energy, smart home, transportation a
 ![Iot Applications](https://raw.githubusercontent.com/kiazamiri/IoT-Project/master/images/pic%201.jpg)
 - Health: : IoT can help in Health by gathering the sensor data related to the vital signs of the patient and sending them to their doctors. Also by processing the data they can inform the patient about any kind of risk whenever and wherever they are.
 
--Smart city: Traffic control, managing city residual, smart parking and optimize transportation are a few of the benefits that users in a smart city can have.
+- Smart city: Traffic control, managing city residual, smart parking and optimize transportation are a few of the benefits that users in a smart city can have.
 
 ![Smart City](https://raw.githubusercontent.com/kiazamiri/IoT-Project/master/images/iota-smart_city_components_desktop.jpg)
 ## Project
@@ -30,3 +30,5 @@ In this code by calling the SoftwareSerial library, I tend to link the Arduino U
 
 With the GET command that includes the apikey and field number and the measured data, the data is send to the Thingspeak server which a bit of delay. In the case of an error in CIPSEND, the AT + CIPCLOSE command will be executed and starts for the beginning. 
 In the end, the server need about 15 seconds to update and AT + RST resets the process. For the layout of the circuit the SIM800L module is supplied with 4.5 volt and its TX pin is connected to the #10 pin of the Arduino Uno board and its RX pin to the #11 pin of the Arduino board like below.
+
+![my board]()
